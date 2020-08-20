@@ -42,7 +42,7 @@ jobs:
           at: ~/repo
       - run:
           name: Installing deployment dependencies
-          working_directory: ~/repo
+          working_directory: ~/repo/workspace
           command: |
             ls -a
             # cat kan.txt
