@@ -41,6 +41,8 @@ jobs:
           working_directory: ~/repo/aritifact/
           command: |
             ls
+            dir
+            ll
       - run:
           name: Installing deployment dependencies
           working_directory: ~/repo
