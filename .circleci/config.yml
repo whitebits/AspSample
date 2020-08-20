@@ -3,7 +3,7 @@ version: 2
 _defaults: &defaults
   working_directory: ~/repo
   docker:
-   - image: mcr.microsoft.com/dotnet/core/sdk
+   - image: mcr.microsoft.com/dotnet/framework/aspnet
 jobs:
   publish:
     <<: *defaults
