@@ -10,6 +10,9 @@ jobs:
       name: windows/default
     steps:
       - checkout
+      -run: 
+         name: "Restore"
+         command: nuget restore
       - run:
           name: "Install project dependencies"
           command: MSBuild.exe HelloWorld.csproj  /t:Rebuild /p:DeployOnBuild=true /p:Configuration=Release  /p:SkipPostSharp=true
