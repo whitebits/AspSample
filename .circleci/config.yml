@@ -10,17 +10,19 @@ jobs:
       name: windows/default
     steps:
       - checkout
-      working_directory: /temp/workspace/
+     
       - run:
           name: "Install project dependencies"
           command: nuget restore
       - run:
           name: "Install project dependencies"
+          working_directory: /temp/workspace/
           command: new-item -ItemType File kan.txt
           # Msbuild.exe HelloWorld.csproj -t:restore /t:Build
            #MSBuild.exe HelloWorld.csproj  /t:Rebuild /p:DeployOnBuild=true /p:Configuration=Release  /p:SkipPostSharp=true
       - run:
           name: "Install project dependencies"
+          working_directory: /temp/workspace/
           command: echo "hello"| Add-Content .\kan.txt
       - persist_to_workspace:
           root: /temp/workspace/
