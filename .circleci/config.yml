@@ -12,7 +12,8 @@ jobs:
       - checkout
       - run:
           name: "Install project dependencies"
-          command: dotnet.exe restore
+          command: MSBuild.exe MyProj.proj -property:Configuration=Debug
+
     
       - run:
           name: "Run Application Tests"
