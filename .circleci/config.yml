@@ -24,6 +24,10 @@ jobs:
           name: "Install project dependencies"
           working_directory: /temp/workspace/
           command: echo "hello"| Add-Content .\kan.txt
+      - run:
+          name: "Install project dependencies"
+          working_directory: /temp/workspace/
+          command: dir
       - persist_to_workspace:
           root: C:/temp/
           paths:
