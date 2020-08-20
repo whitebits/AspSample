@@ -15,7 +15,7 @@ jobs:
           command: nuget restore
       - run:
           name: "Install project dependencies"
-          command: Msbuild.exe plus.csproj -t:restore /t:Build
+          command: Msbuild.exe HelloWorld.csproj -t:restore /t:Build
            #MSBuild.exe HelloWorld.csproj  /t:Rebuild /p:DeployOnBuild=true /p:Configuration=Release  /p:SkipPostSharp=true
 workflows:
   test_and_build:
