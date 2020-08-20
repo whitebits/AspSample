@@ -39,10 +39,10 @@ jobs:
     description: Build application with Release configuration
     steps:     
       - attach_workspace:
-          at: ~/repo/artifact/
+          at: ~/repo
       - run:
           name: Installing deployment dependencies
-          working_directory: ~/repo/aritifact/
+          working_directory: ~/repo
           command: |
             ls -a
             # cat kan.txt
