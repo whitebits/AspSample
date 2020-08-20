@@ -29,7 +29,7 @@ jobs:
           working_directory: /temp/workspace/
           command: dir
       - persist_to_workspace:
-          root: C:/temp/
+          root: C:/temp
           paths:
             - workspace
            
