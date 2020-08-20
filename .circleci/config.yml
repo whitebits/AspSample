@@ -2,8 +2,9 @@ version: 2
 
 _defaults: &defaults
   working_directory: ~/repo
-  docker:
-   - image: mcr.microsoft.com/dotnet/framework/aspnet
+  orbs:
+    win: circleci/windows@2.2.0
+  
 jobs:
   publish:
     <<: *defaults
