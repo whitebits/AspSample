@@ -27,7 +27,7 @@ jobs:
       - persist_to_workspace:
           root: C:/temp/
           paths:
-            - /workspace
+            - workspace
            
   deploy:
     docker:
