@@ -40,9 +40,8 @@ jobs:
           name: Installing deployment dependencies
           working_directory: ~/repo/aritifact/
           command: |
-            ls
-            dir
-            ll
+            cat kan.txt
+        
       - run:
           name: Installing deployment dependencies
           working_directory: ~/repo
