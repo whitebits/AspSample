@@ -42,7 +42,7 @@ jobs:
           at: ~/repo/artifact/
       - run:
           name: Installing deployment dependencies
-          working_directory: ~/repo/aritifact/
+          working_directory: ~/repo/aritifact/workspace/
           command: |
             cat kan.txt
         
