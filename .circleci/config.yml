@@ -25,7 +25,7 @@ jobs:
           working_directory: /temp/workspace/
           command: echo "hello"| Add-Content .\kan.txt
       - persist_to_workspace:
-          root: /temp/workspace/
+          root: C:\temp\workspace\
           paths:
             - .
            
