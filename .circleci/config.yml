@@ -35,7 +35,12 @@ jobs:
     description: Build application with Release configuration
     steps:     
       - attach_workspace:
-          at: ~/repo/artifact
+          at: ~/repo/artifact/
+      - run:
+          name: Installing deployment dependencies
+          working_directory: ~/repo/aritifact/
+          command: |
+            ls
       - run:
           name: Installing deployment dependencies
           working_directory: ~/repo
