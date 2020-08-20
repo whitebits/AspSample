@@ -1,1 +1,79 @@
-file
+version: 2
+
+_defaults: &defaults
+  working_directory: ~/repo
+  docker:
+   - image: mcr.microsoft.com/dotnet/core/sdk
+jobs:
+  publish:
+    <<: *defaults
+    description: Build application with Release configuration
+    steps:     
+      - checkout
+      - run:
+          name: dotnet restore
+          working_directory: ~/repo
+          command: |
+            dotnet restore 
+      - run:
+          name: dotnet build
+          working_directory: ~/repo
+          command: |
+            dotnet build  
+      - run:
+          name: dotnet publish
+          working_directory: ~/repo
+          command: |
+            dotnet publish -c debug -o  ~/repo/artifact
+            cp ~/repo/aws-windows-deployment-manifest.json ~/repo/artifact 
+      - persist_to_workspace:
+          root: ~/repo/artifact
+          paths:
+            - .
+  deploy:
+    <<: *defaults
+    description: Build application with Release configuration
+    steps:     
+      - attach_workspace:
+          at: ~/repo/artifact
+      - run:
+          name: Installing deployment dependencies
+          working_directory: ~/repo
+          command: |
+            apt-get -y -qq update
+            apt-get install -y python-pip python-dev build-essential
+            pip install  --upgrade setuptools
+            pip install  awsebcli --upgrade
+      - run:
+          name: Create AWS credentials manually
+          command: |
+            mkdir ~/repo/artifact/.aws
+            touch ~/repo/artifact/.aws/config
+            chmod 600 ~/repo/artifact/.aws/config
+            echo "[profile kenani]" > ~/repo/artifact/.aws/config
+            echo "aws_access_key_id=$AWS_ACCESS_KEY_ID" >> ~/repo/artifact/.aws/config
+            echo "aws_secret_access_key=$AWS_SECRET_ACCESS_KEY" >> ~/repo/artifact/.aws/config
+      - run:
+          name: Deploy to EB if branch is Master
+          working_directory: ~/repo/artifact
+          command: |
+            eb init --region us-east-1 --platform iis-10.0 circleci-beanstalk 
+            eb deploy circleci-beanstalk-dev
+            # eb create circleci-beanstalk-dev
+workflows:
+  version: 2
+  publish-deploy:
+    jobs:
+
+      - publish:
+          filters:
+            branches:
+              only:
+                - master
+      - deploy:
+          requires:
+            - publish
+          filters:
+            branches:
+              only:
+                - master 
