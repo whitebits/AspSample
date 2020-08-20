@@ -1,83 +1,43 @@
-version: 2
+version: 2.1
 
-_defaults: &defaults
-  working_directory: ~/repo
-  orbs:
-    win: circleci/windows@2.2.0
-  
+orbs:
+  windows: circleci/windows@2.2.0
+
 jobs:
-  publish:
+  test:
+    description: Setup and run application tests
+    executor:
+      name: windows/default
+    steps:
+      - checkout
+      - run:
+          name: "Install project dependencies"
+          command: dotnet.exe restore
+    
+      - run:
+          name: "Run Application Tests"
+          command: dotnet.exe test -v n --results-directory:test_coverage --collect:"Code Coverage"
+      - run:
+          name: "Print Working Directory"
+          command: pwd
+      - store_artifacts:
+          path: C:\Users\circleci\project\test_coverage
+  build:
     description: Build application with Release configuration
     executor:
       name: windows/default
-    
-    steps:     
+    steps:
       - checkout
       - run:
-          name: dotnet restore
-          working_directory: ~/repo
-          command: |
-            dotnet restore 
-      - run:
-          name: dotnet build
-          working_directory: ~/repo
-          command: |
-            dotnet build  
-      - run:
-          name: dotnet publish
-          working_directory: ~/repo
-          command: |
-            dotnet publish -c debug -o  ~/repo/artifact
-            cp ~/repo/aws-windows-deployment-manifest.json ~/repo/artifact 
-      - persist_to_workspace:
-          root: ~/repo/artifact
-          paths:
-            - .
-  deploy:
-    docker:
-    - image: mcr.microsoft.com/dotnet/core/sdk
-    description: Build application with Release configuration
-    steps:     
-      - attach_workspace:
-          at: ~/repo/artifact
-      - run:
-          name: Installing deployment dependencies
-          working_directory: ~/repo
-          command: |
-            apt-get -y -qq update
-            apt-get install -y python-pip python-dev build-essential
-            pip install  --upgrade setuptools
-            pip install  awsebcli --upgrade
-      - run:
-          name: Create AWS credentials manually
-          command: |
-            mkdir ~/repo/artifact/.aws
-            touch ~/repo/artifact/.aws/config
-            chmod 600 ~/repo/artifact/.aws/config
-            echo "[profile kenani]" > ~/repo/artifact/.aws/config
-            echo "aws_access_key_id=$AWS_ACCESS_KEY_ID" >> ~/repo/artifact/.aws/config
-            echo "aws_secret_access_key=$AWS_SECRET_ACCESS_KEY" >> ~/repo/artifact/.aws/config
-      - run:
-          name: Deploy to EB if branch is Master
-          working_directory: ~/repo/artifact
-          command: |
-            eb init --region us-east-1 --platform iis-10.0 circleci-beanstalk 
-            eb deploy circleci-beanstalk-dev
-            # eb create circleci-beanstalk-dev
+          name: "Build Application according to some given configuration"
+          command: dotnet.exe build --configuration Release
+  
 workflows:
-  version: 2
-  publish-deploy:
+  test_and_build:
     jobs:
-
-      - publish:
-          filters:
-            branches:
-              only:
-                - master
-      - deploy:
+      - test
+      - build:
           requires:
-            - publish
-          filters:
-            branches:
-              only:
-                - master 
+            - test
+
+                     
