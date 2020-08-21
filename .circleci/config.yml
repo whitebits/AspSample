@@ -76,12 +76,11 @@ jobs:
             unzip -q HelloWorld.zip 
       - run:
           name: Installing deployment dependencies
-          working_directory: ~/repo/Package/HelloWorld
+          working_directory: ~/repo/Package
           command: |
-            ls -a
+            cd HelloWorld  
       - run:
           name: Installing deployment dependencies
-          working_directory: ~/repo/Package
           command: |
             ls -a
       - run:
