@@ -16,12 +16,12 @@ jobs:
          # command: nuget restore
       - run:
           name: "Install project dependencies"
-          command: MSBuild.exe  /t:Rebuild /p:outdir=C:/temp/workspace /p:DeployOnBuild=true /p:Configuration=Release  /p:SkipPostSharp=true
+          command: MSBuild.exe HelloWorld.sln /t:Rebuild /p:outdir=C:/temp/workspace /p:DeployOnBuild=true /p:Configuration=Release  /p:SkipPostSharp=true
 
           
       - run:
           name: "Install project dependencies"
-          command: MSBuild.exe   /t:Publish /p:PublishDirectory="C:/temp/workspace"
+          command: MSBuild.exe HelloWorld.sln /t:Publish /p:PublishDirectory="C:/temp/workspace"
        
       - run:
           name: "Install project dependencies"
