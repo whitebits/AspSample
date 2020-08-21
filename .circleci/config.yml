@@ -24,8 +24,13 @@ jobs:
 
           
       - run:
-          name: "Install project dependencies"
-          command: MSBuild.exe HelloWorld.sln /t:Publish /p:PublishDirectory="C:/temp/workspace"
+          name: "Publish folder "
+          working_directory: C:/Users/circleci/project/obj/Release/Package
+          command: dir
+          
+      - run:
+          name: "Publish folder "
+          command: cd C:/Users/circleci/project/obj/Release/Package
        
       - run:
           name: "Install project dependencies"
