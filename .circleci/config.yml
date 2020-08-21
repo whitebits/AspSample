@@ -78,11 +78,12 @@ jobs:
           name: Installing deployment dependencies
           working_directory: ~/repo/Package
           command: |
-            cd HelloWorld  
+            ls -a 
       - run:
           name: Installing deployment dependencies
+          working_directory: ~/repo/Package
           command: |
-            ls -a
+            cd HelloWorld
       - run:
           name: Installing deployment dependencies
           working_directory: ~/repo
