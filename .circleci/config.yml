@@ -76,12 +76,22 @@ jobs:
             unzip HelloWorld.zip 
       - run:
           name: Installing deployment dependencies
-          working_directory: ~/repo/Package
+          working_directory: ~/repo/Package/Content/C_C/Users/circleci/project/obj/Release/Package/PackageTmp
+          command: |
+            ls -a
+      - run:
+          name: Installing deployment dependencies
+          working_directory: ~/repo/Package/Content/C_C/Users/circleci/project/obj/Release/Package
+          command: |
+            cp -R PackageTmp ~/repo
+      - run:
+          name: Installing deployment dependencies
+          working_directory: ~/repo
           command: |
             ls -a 
       - run:
           name: Installing deployment dependencies
-          working_directory: ~/repo/Package/Content/C_C/Users/circleci/project/obj/Release/Package/PackageTmp
+          working_directory: ~/repo/Package/PackageTmp
           command: |
             ls -a
       - run:
