@@ -80,17 +80,17 @@ jobs:
           command: |
             ls -a
       - run:
-          name: Installing deployment dependencies
+          name: copy
           working_directory: ~/repo/Package/Content/C_C/Users/circleci/project/obj/Release/Package
           command: |
             cp -R PackageTmp ~/repo
       - run:
-          name: Installing deployment dependencies
+          name: repo list
           working_directory: ~/repo
           command: |
             ls -a 
       - run:
-          name: Installing deployment dependencies
+          name: repo copy 
           working_directory: ~/repo/Package/PackageTmp
           command: |
             ls -a
