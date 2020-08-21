@@ -30,9 +30,9 @@ jobs:
           command: dir
           
       - run:
-          name: "Publish folder "
+          name: "copy to workspace "
           working_directory: C:\Users\circleci\project
-          command: Copy-Item .\aws-windows-deployment-manifest .\obj\Release\Package\
+          command: Copy-Item .\aws-windows-deployment-manifest.json .\obj\Release\Package\
       - run:
           name: "Publish folder "
           working_directory: C:/Users/circleci/project/obj/Release/Package
