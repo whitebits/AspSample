@@ -89,13 +89,14 @@ jobs:
           working_directory: ~/repo/Package/Content/C_C/Users/circleci/project/obj/Release/Package
           command: |
             cp -R PackageTmp ~/repo
+            cp  ~/repo/Package/aws-windows-deployment-manifest ~/repo/PackageTmp
       - run:
           name: repo list
           working_directory: ~/repo
           command: |
             ls -a 
       - run:
-          name: repo copy 
+          name: LIst in PAckage Temp 
           working_directory: ~/repo/Package/PackageTmp
           command: |
             ls -a
