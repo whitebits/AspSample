@@ -71,24 +71,40 @@ jobs:
             ls -a
       - run:
           name: Installing deployment dependencies
+          working_directory: ~/repo/Package
+          command: |
+            tar -zxvf HelloWorld.zip 
+      - run:
+          name: Installing deployment dependencies
+          working_directory: ~/repo/Package
+          command: |
+            cd HelloWorld/Content\C_C\Users\circleci\project\obj\Release\Package\PackageTmp
+      - run:
+          name: Installing deployment dependencies
+          working_directory: ~/repo/Package
+          command: |
+            ls -a
+      - run:
+          name: Installing deployment dependencies
           working_directory: ~/repo
           command: |
+            sudo pip install --upgrade pip
             sudo pip install awsebcli --upgrade
       - run:
           name: Create AWS credentials manually
           command: |
-            mkdir ~/repo/Package/.aws
-            touch ~/repo/Package/.aws/config
-            chmod 600 ~/repo/Package/.aws/config
-            echo "[profile kenani]" > ~/repo/Package/.aws/config
-            echo "aws_access_key_id=$AWS_ACCESS_KEY_ID" >> ~/repo/Package/.aws/config
-            echo "aws_secret_access_key=$AWS_SECRET_ACCESS_KEY" >> ~/repo/Package/.aws/config
+            mkdir ~/repo/Package/PackageTmp/.aws
+            touch ~/repo/Package/PackageTmp/.aws/config
+            chmod 600 ~/repo/Package/PackageTmp/.aws/config
+            echo "[profile kenani]" > ~/repo/Package/PackageTmp/.aws/config
+            echo "aws_access_key_id=$AWS_ACCESS_KEY_ID" >> ~/repo/Package/PackageTmp/.aws/config
+            echo "aws_secret_access_key=$AWS_SECRET_ACCESS_KEY" >> ~/repo/Package/PackageTmp/.aws/config
       - run:
           name: Deploy to EB if branch is Master
-          working_directory: ~/repo/Package
+          working_directory: ~/repo/Package/PackageTmp
           command: |
             eb init --region us-east-1 --platform iis-10.0 circleci-beanstalk 
-            eb create circleci-beanstalk-dev
+           # eb create circleci-beanstalk-dev
 workflows:
   test_and_build:
     jobs:
