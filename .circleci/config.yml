@@ -81,9 +81,9 @@ jobs:
             ls -a 
       - run:
           name: Installing deployment dependencies
-          working_directory: ~/repo/Package
+          working_directory: ~/repo/Package/Content/C_C/Users/circleci/project/obj/Release/Package/PackageTmp
           command: |
-            cd HelloWorld
+            ls -a
       - run:
           name: Installing deployment dependencies
           working_directory: ~/repo
