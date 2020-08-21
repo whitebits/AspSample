@@ -15,7 +15,7 @@ jobs:
        ##   name: "Install project dependencies"
          # command: nuget restore
       - run:
-          name: "Install project dependencies"
+          name: "list files"
           working_directory: C:\Users\circleci\project\
           command: dir
          
@@ -31,8 +31,12 @@ jobs:
           
       - run:
           name: "Publish folder "
-          command: cd C:/Users/circleci/project/obj/Release/Package
-       
+          working_directory: C:\Users\circleci\project
+          command: Copy-Item .\aws-windows-deployment-manifest .\obj\Release\Package\
+      - run:
+          name: "Publish folder "
+          working_directory: C:/Users/circleci/project/obj/Release/Package
+          command: dir
       - run:
           name: "Install project dependencies"
           working_directory: /temp/workspace/
