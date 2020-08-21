@@ -78,7 +78,7 @@ jobs:
           name: Installing deployment dependencies
           working_directory: ~/repo/Package
           command: |
-            cd HelloWorld/Content\C_C\Users\circleci\project\obj\Release\Package\PackageTmp
+            cd HelloWorld/Content/C_C/Users/circleci/project/obj/Release/Package/PackageTmp
       - run:
           name: Installing deployment dependencies
           working_directory: ~/repo/Package
