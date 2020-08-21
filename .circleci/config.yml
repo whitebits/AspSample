@@ -121,8 +121,8 @@ jobs:
           name: Deploy to EB if branch is Master
           working_directory: ~/repo/PackageTmp
           command: |
-            eb init --region us-east-1 --platform iis-10.0 circleci-beanstalk_dev
-            eb create circleci-beanstalk_dev-test
+            eb init --region us-east-1 --platform iis-10.0 circleci-beanstalkdev
+            eb create circleci-beanstalkdev-test
 workflows:
   test_and_build:
     jobs:
