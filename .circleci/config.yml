@@ -96,9 +96,10 @@ jobs:
           command: |
             cp  ./Package/aws-windows-deployment-manifest.json ./PackageTmp/
             ls -a 
+
       - run:
           name: LIst in PAckage Temp 
-          working_directory: ~/repo/Package/PackageTmp
+          working_directory: ~/repo/PackageTmp
           command: |
             ls -a
       - run:
@@ -110,18 +111,18 @@ jobs:
       - run:
           name: Create AWS credentials manually
           command: |
-            mkdir ~/repo/Package/PackageTmp/.aws
-            touch ~/repo/Package/PackageTmp/.aws/config
-            chmod 600 ~/repo/Package/PackageTmp/.aws/config
-            echo "[profile kenani]" > ~/repo/Package/PackageTmp/.aws/config
-            echo "aws_access_key_id=$AWS_ACCESS_KEY_ID" >> ~/repo/Package/PackageTmp/.aws/config
-            echo "aws_secret_access_key=$AWS_SECRET_ACCESS_KEY" >> ~/repo/Package/PackageTmp/.aws/config
+            mkdir ~/repo/PackageTmp/.aws
+            touch ~/repo/PackageTmp/.aws/config
+            chmod 600 ~/repo/PackageTmp/.aws/config
+            echo "[profile kenani]" > ~/repo/PackageTmp/.aws/config
+            echo "aws_access_key_id=$AWS_ACCESS_KEY_ID" >> ~/repo/PackageTmp/.aws/config
+            echo "aws_secret_access_key=$AWS_SECRET_ACCESS_KEY" >> ~/repo/PackageTmp/.aws/config
       - run:
           name: Deploy to EB if branch is Master
-          working_directory: ~/repo/Package/PackageTmp
+          working_directory: ~/repo/PackageTmp
           command: |
             eb init --region us-east-1 --platform iis-10.0 circleci-beanstalk 
-           # eb create circleci-beanstalk-dev
+           eb create circleci-beanstalk-dev
 workflows:
   test_and_build:
     jobs:
