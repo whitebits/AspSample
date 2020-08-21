@@ -16,7 +16,8 @@ jobs:
          # command: nuget restore
       - run:
           name: "Install project dependencies"
-          command: pwd
+          working_directory: C:\Users\circleci\project\
+          command: dir
          
       - run:
           name: "Install project dependencies"
