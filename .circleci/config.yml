@@ -47,9 +47,9 @@ jobs:
           working_directory: /temp/workspace/
           command: dir
       - persist_to_workspace:
-          root: C:/temp
+          root: C:/Users/circleci/project/obj/Release
           paths:
-            - workspace
+            - Package
            
   deploy:
     docker:
@@ -60,11 +60,15 @@ jobs:
           at: ~/repo
       - run:
           name: Installing deployment dependencies
-          working_directory: ~/repo/workspace
+          working_directory: ~/repo
           command: |
             ls -a
-            cat kan.txt
-        
+            # cat kan.txt
+      - run:
+          name: Installing deployment dependencies
+          working_directory: ~/repo/Package
+          command: |
+            ls -a
       - run:
           name: Installing deployment dependencies
           working_directory: ~/repo
