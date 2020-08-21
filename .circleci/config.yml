@@ -16,6 +16,9 @@ jobs:
           command: nuget restore
       - run:
           name: "Install project dependencies"
+          command: MSBuild.exe HelloWorld.csproj  /t:Rebuild /p:DeployOnBuild=true /p:Configuration=Release  /p:SkipPostSharp=true
+      - run:
+          name: "Install project dependencies"
           working_directory: /temp/workspace/
           command: new-item -ItemType File kan.txt
           # Msbuild.exe HelloWorld.csproj -t:restore /t:Build
