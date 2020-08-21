@@ -94,7 +94,7 @@ jobs:
           name: repo list
           working_directory: ~/repo
           command: |
-            cp  ./Package/aws-windows-deployment-manifest ./PackageTmp/
+            cp  ./Package/aws-windows-deployment-manifest.json ./PackageTmp/
             ls -a 
       - run:
           name: LIst in PAckage Temp 
