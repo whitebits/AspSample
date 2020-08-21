@@ -20,7 +20,7 @@ jobs:
           
       - run:
           name: "Install project dependencies"
-          command: MSBuild.exe HelloWorld.csproj   /t:Publish /p:PublishDirectory=" C:/temp/workspace"
+          command: MSBuild.exe HelloWorld.csproj   /t:Publish /p:PublishDirectory="C:/temp/workspace"
        
 
       - run:
