@@ -73,7 +73,7 @@ jobs:
           name: Installing deployment dependencies
           working_directory: ~/repo/Package
           command: |
-            unzip -q HelloWorld.zip 
+            unzip HelloWorld.zip 
       - run:
           name: Installing deployment dependencies
           working_directory: ~/repo/Package
