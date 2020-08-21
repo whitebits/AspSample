@@ -53,7 +53,7 @@ jobs:
            
   deploy:
     docker:
-    - image: mcr.microsoft.com/dotnet/core/sdk
+    - image: circleci/python:3.6.4
     description: Build application with Release configuration
     steps:     
       - attach_workspace:
@@ -73,26 +73,23 @@ jobs:
           name: Installing deployment dependencies
           working_directory: ~/repo
           command: |
-            apt-get -y -qq update
-            apt-get install -y python-pip python-dev build-essential
-            pip install  --upgrade setuptools
-            pip install  awsebcli --upgrade
+            sudo pip install awsebcli --upgrade
       - run:
           name: Create AWS credentials manually
           command: |
-            mkdir ~/repo/artifact/.aws
-            touch ~/repo/artifact/.aws/config
-            chmod 600 ~/repo/artifact/.aws/config
-            echo "[profile kenani]" > ~/repo/artifact/.aws/config
-            echo "aws_access_key_id=$AWS_ACCESS_KEY_ID" >> ~/repo/artifact/.aws/config
-            echo "aws_secret_access_key=$AWS_SECRET_ACCESS_KEY" >> ~/repo/artifact/.aws/config
+            mkdir ~/repo/Package/.aws
+            touch ~/repo/Package/.aws/config
+            chmod 600 ~/repo/Package/.aws/config
+            echo "[profile kenani]" > ~/repo/Package/.aws/config
+            echo "aws_access_key_id=$AWS_ACCESS_KEY_ID" >> ~/repo/Package/.aws/config
+            echo "aws_secret_access_key=$AWS_SECRET_ACCESS_KEY" >> ~/repo/Package/.aws/config
       - run:
           name: Deploy to EB if branch is Master
-          working_directory: ~/repo/artifact
+          working_directory: ~/repo/Package
           command: |
             eb init --region us-east-1 --platform iis-10.0 circleci-beanstalk 
            # eb deploy circleci-beanstalk-dev
-            # eb create circleci-beanstalk-dev
+            eb create circleci-beanstalk-dev
 workflows:
   test_and_build:
     jobs:
