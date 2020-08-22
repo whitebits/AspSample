@@ -15,42 +15,8 @@ jobs:
        ##   name: "Install project dependencies"
          # command: nuget restore
       - run:
-          name: "list files"
-          working_directory: C:\Users\circleci\project\
-          command: dir
-         
-      - run:
           name: "Install project dependencies"
-          command: MSBuild.exe HelloWorld.sln /t:Rebuild /p:DeployOnBuild=true /p:Configuration=Release  /p:SkipPostSharp=true
-
-          
-      - run:
-          name: "Publish folder "
-          working_directory: C:/Users/circleci/project/obj/Release/Package
-          command: dir
-          
-      - run:
-          name: "copy to workspace "
-          working_directory: C:\Users\circleci\project
-          command: Copy-Item .\aws-windows-deployment-manifest.json .\obj\Release\Package\
-      - run:
-          name: "Publish folder "
-          working_directory: C:/Users/circleci/project/obj/Release/Package
-          command: dir
-      - run:
-          name: "Install project dependencies"
-          working_directory: /temp/workspace/
-          command: new-item -ItemType File kan.txt
-          # Msbuild.exe HelloWorld.csproj -t:restore /t:Build
-           #MSBuild.exe HelloWorld.csproj  /t:Rebuild /p:DeployOnBuild=true /p:Configuration=Release  /p:SkipPostSharp=true /p:outdir="c:\outproject\\"
-      - run:
-          name: "Install project dependencies"
-          working_directory: /temp/workspace/
-          command: echo "hello"| Add-Content .\kan.txt
-      - run:
-          name: "Install project dependencies"
-          working_directory: /temp/workspace/
-          command: dir
+          command: MSBuild.exe HelloWorld.sln /t:Rebuild /p:DeployOnBuild=true /p:Configuration=Release  /p:SkipPostSharp=true          
       - persist_to_workspace:
           root: C:/Users/circleci/project/obj/Release
           paths:
@@ -63,50 +29,28 @@ jobs:
     steps:     
       - attach_workspace:
           at: ~/repo
+
       - run:
           name: Installing deployment dependencies
-          working_directory: ~/repo
+          working_directory: ~/repo/Package
           command: |
-            ls -a
-            # cat kan.txt
+            unzip HelloWorld.zip -d Artifact
       - run:
           name: Installing deployment dependencies
           working_directory: ~/repo/Package
           command: |
             ls -a
-      - run:
-          name: Installing deployment dependencies
-          working_directory: ~/repo/Package
-          command: |
-            unzip HelloWorld.zip 
-      - run:
-          name: Installing deployment dependencies
-          working_directory: ~/repo/Package/Content/C_C/Users/circleci/project/obj/Release/Package/PackageTmp
-          command: |
-            ls -a
-      - run:
-          name: copy
-          working_directory: ~/repo/Package/Content/C_C/Users/circleci/project/obj/Release/Package
-          command: |
-            cp -R PackageTmp ~/repo
-           
-      - run:
-          name: repo list
-          working_directory: ~/repo
-          command: |
-            cp  ./Package/aws-windows-deployment-manifest.json ./PackageTmp/
-            ls -a 
 
       - run:
           name: LIst in PAckage Temp 
-          working_directory: ~/repo/PackageTmp
+          working_directory: ~/repo/Package/Artifact
           command: |
             ls -a
       - run:
           name: Installing deployment dependencies
           working_directory: ~/repo
           command: |
-            sudo pip install --upgrade pip
+           # sudo pip install --upgrade pip
             sudo pip install awsebcli --upgrade
       - run:
           name: Create AWS credentials manually
@@ -121,8 +65,8 @@ jobs:
           name: Deploy to EB if branch is Master
           working_directory: ~/repo/PackageTmp
           command: |
-            eb init --region us-east-1 --platform iis-10.0 circleci-beanstalkdev
-            eb create circleci-beanstalkdev-test
+            #eb init --region us-east-1 --platform iis-10.0 circleci-beanstalkdev
+           # eb create circleci-beanstalkdev-test
 workflows:
   test_and_build:
     jobs:
