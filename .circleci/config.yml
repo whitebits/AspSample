@@ -4,48 +4,31 @@ orbs:
   windows: circleci/windows@2.2.0
 
 jobs:
-  test:
-    description: Setup and run application tests
+  publish:
+    description: Build and publish 
     executor:
       name: windows/default
     steps:
       - checkout
-     
-     ## - run:
-       ##   name: "Install project dependencies"
-         # command: nuget restore
       - run:
-          name: "Install project dependencies"
+          name: Build Project 
           command: MSBuild.exe HelloWorld.sln /t:Rebuild /p:DeployOnBuild=true /p:Configuration=Release  /p:SkipPostSharp=true          
       - persist_to_workspace:
           root: C:/Users/circleci/project/obj/Release
           paths:
-            - Package
-           
+            - Package  
   deploy:
     docker:
     - image: circleci/python:3.6.4
-    description: Build application with Release configuration
+    description: Deploy
     steps:     
       - attach_workspace:
           at: ~/repo
-
       - run:
-          name: Installing deployment dependencies
+          name: Publish Data
           working_directory: ~/repo/Package
           command: |
             unzip HelloWorld.zip -d Artifact
-      - run:
-          name: Installing deployment dependencies
-          working_directory: ~/repo/Package
-          command: |
-            ls -a
-
-      - run:
-          name: LIst in PAckage Temp 
-          working_directory: ~/repo/Package/Artifact
-          command: |
-            ls -a
       - run:
           name: Installing deployment dependencies
           working_directory: ~/repo/Package/Artifact
@@ -65,15 +48,18 @@ jobs:
           name: Deploy to EB if branch is Master
           working_directory: ~/repo/Package/Artifact
           command: |
-            eb init --region us-east-1 --platform iis-10.0 circleci-beanstalkdev
-            eb create circleci-beanstalkdev-test
+            eb init --region us-east-1 --platform iis-10.0 circleci-beanstalk
+            eb create circleci-beanstalk-test
 workflows:
-  test_and_build:
+  Publish_and_build:
     jobs:
-      - test
+      - publish
       - deploy:
           requires:
-            - test
-      
+            - publish
+          filters:
+            branches:
+              only:
+                - master
 
                      
