@@ -66,7 +66,7 @@ jobs:
           working_directory: ~/repo/Package/Artifact
           command: |
             eb init --region us-east-1 --platform iis-10.0 circleci-beanstalkdev
-           # eb create circleci-beanstalkdev-test
+            eb create circleci-beanstalkdev-test
 workflows:
   test_and_build:
     jobs:
