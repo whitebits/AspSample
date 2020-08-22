@@ -48,24 +48,24 @@ jobs:
             ls -a
       - run:
           name: Installing deployment dependencies
-          working_directory: ~/repo
+          working_directory: ~/repo/Package/Artifact
           command: |
            # sudo pip install --upgrade pip
             sudo pip install awsebcli --upgrade
       - run:
           name: Create AWS credentials manually
           command: |
-            mkdir ~/repo/PackageTmp/.aws
-            touch ~/repo/PackageTmp/.aws/config
-            chmod 600 ~/repo/PackageTmp/.aws/config
-            echo "[profile kenani]" > ~/repo/PackageTmp/.aws/config
-            echo "aws_access_key_id=$AWS_ACCESS_KEY_ID" >> ~/repo/PackageTmp/.aws/config
-            echo "aws_secret_access_key=$AWS_SECRET_ACCESS_KEY" >> ~/repo/PackageTmp/.aws/config
+            mkdir ~/repo/Package/Artifact/.aws
+            touch ~/repo/Package/Artifact/.aws/config
+            chmod 600  ~/repo/Package/Artifact/.aws/config
+            echo "[profile kenani]" > ~/repo/Package/Artifact/.aws/config
+            echo "aws_access_key_id=$AWS_ACCESS_KEY_ID" >> ~/repo/Package/Artifact/.aws/config
+            echo "aws_secret_access_key=$AWS_SECRET_ACCESS_KEY" >> ~/repo/Package/Artifact/.aws/config
       - run:
           name: Deploy to EB if branch is Master
-          working_directory: ~/repo/PackageTmp
+          working_directory: ~/repo/Package/Artifact
           command: |
-            #eb init --region us-east-1 --platform iis-10.0 circleci-beanstalkdev
+            eb init --region us-east-1 --platform iis-10.0 circleci-beanstalkdev
            # eb create circleci-beanstalkdev-test
 workflows:
   test_and_build:
