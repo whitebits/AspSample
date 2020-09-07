@@ -1,16 +1,14 @@
+
 {
   "manifestVersion": 1,
   "deployments": {
-
     "aspNetCoreWeb": [
       {
-        "name": "app",
+        "name": "my-dotnet-core-app",
         "parameters": {
-          "appBundle": ".",
-          "iisPath": "/",
-          "iisWebSite": "Default Web Site"
+          "archive": "HelloWorld.zip",
+          "iisPath": "/"
         }
       }
     ]
   }
-}
